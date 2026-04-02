@@ -141,3 +141,13 @@ In Kubernetes, every Pod receives its own IP address, removing the need for manu
 By default, all Pods can communicate with each other. If you need to restrict or control this traffic at the IP or port level, you use Network Policies. Network Policies act like internal firewalls for the cluster. They let you define which Pods or namespaces can communicate by using label selectors, and they can also include IP-based rules using CIDR ranges.
 
 Network Policies are enforced by the cluster’s network plugin. To use them, your networking solution must support the NetworkPolicy resource—otherwise, creating a policy will have no effect.
+
+## Scheduling
+It refers to the process of automatically selecting the most appropriate worker node on which to run a containerized workload. 
+
+The kube-scheduler is responsible for making these scheduling decisions. Process begins whenever a new Pod is created. Because Kubernetes uses a declarative model, the pod is first defined and then the sceduler decides which node it should run on. The kkubelet on that node, along with the container runtime, handles actually starting the continers. 
+
+The scheduler relies on information provided by the user, such as CPU a memory requests, or specific node characteristics. For instance you might specify that an application needs 2 CPU core, 4GB of memory and ideally runs on a node with fast storage. 
+
+The scheduler uses this information to filter out nodes that do not meet the requirements. If multiple nodes are suitable, Kubernetes chooses the one with the fewest running Pods. If no node meets the requirements—such as when insufficient resources are available—the scheduler continues retrying until the desired state is achieved.
+
